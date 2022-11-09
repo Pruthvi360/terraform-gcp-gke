@@ -9,7 +9,7 @@ resource "google_compute_network" "main" {
 resource "google_compute_subnetwork" "private" {
     name = "private"
     project = google_compute_shared_vpc_host_project.host.project
-    ip_cidr_range = "192.168.13.0/20"
+    ip_cidr_range = "192.168.13.0/24"
     region = local.region
     network = google_compute_network.main.self_link
     private_ip_google_access = true
