@@ -1,8 +1,8 @@
-resource "google_service_account" "kube" {
+resource "google_service_account" "kube-pruthvi" {
   project    = local.service_project_id
-  account_id = "kube"
+  account_id = "kube-pruthvi"
 
-  depends_on = [google_project.kube]
+  depends_on = [google_project.kube-pruthvi]
 }
 
 resource "google_container_cluster" "gke" {
@@ -38,7 +38,7 @@ resource "google_container_cluster" "gke" {
   }
 
   workload_identity_config {
-    identity_namespace = "${google_project.kube.project_id}.svc.id.goog"
+    workload_pool = "${google_project.kube-pruthvi.project_id}.svc.id.goog"
   }
 
 }
@@ -61,7 +61,7 @@ resource "google_container_node_pool" "general" {
     }
     machine_type = "e2-medium"
 
-    service_account = google_service_account.kube.email
+    service_account = google_service_account.kube-pruthvi.email
     oauth_scopes = [
       "https://www.googleapis.com/auth/cloud-platform"
     ]
